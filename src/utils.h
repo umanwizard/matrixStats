@@ -97,3 +97,65 @@ static R_INLINE int asLogicalNoNA(SEXP x, char *xlabel) {
   return value;
 } /* asLogicalNoNA() */
 
+
+/** xlength(idxs) must not be 0, which should be checked before calling this function. **/
+static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
+  assertArgVector(idxs, R_TYPE_INT, "idxs");
+  R_xlen_t M = xlength(idxs);
+  int *idxs_ptr = INTEGER(idxs);
+
+  int state = 0;
+  int count = 0;
+  for (int i = 0; i < M; ++ i) {
+    if (idxs_ptr[i] > 0) {
+      if (state < 0) error("only 0's may be mixed with negative subscripts");
+      if (idxs_ptr[i] > N) error("subscript out of bounds");
+      state = 1;
+      ++ count;
+
+    } else if (idxs_ptr[i] < 0) {
+      if (state > 0) error("only 0's may be mixed with positive subscripts");
+      state = -1;
+    }
+  }
+
+  if (state >= 0) *IDXS = count;
+  if (count == M) return idxs_ptr; // must have: state >= 0
+  if (state == 0) return NULL;
+
+  if (state > 0) {
+    int *ans = (int*) R_alloc(count, sizeof(int));
+    int j = 0;
+    for (int i = 0; i < M; ++ i) {
+      if (idxs_ptr[i] > 0) ans[j ++] = idxs_ptr[i];
+    }
+    return ans;
+  }
+
+  // state < 0
+  unsigned char filter[N];
+  count = N;
+  memset(filter, 0, sizeof(filter));
+  for (int i = 0; i < M; ++ i) {
+    int idx = -idxs_ptr[i];
+    if (idx > 0 && idx <= N) {
+      if (filter[idx-1] == 0) {
+        -- count;
+        filter[idx-1] = 1;
+      }
+    }
+  }
+
+  *IDXS = count;
+  if (count == 0) return NULL;
+
+  int *ans = (int*) R_alloc(count, sizeof(int));
+  int j = 0;
+  for (int i = 0; i < N; ++ i) {
+    if (!filter[i]) ans[j ++] = i + 1;
+  }
+
+  return ans;
+}
+
+
