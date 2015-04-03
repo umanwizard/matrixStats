@@ -67,3 +67,8 @@ y <- validate(0:0, 0)
 stopifnot(identical(y, integer(0)))
 
 
+# NA in idxs
+tools::assertError(validate(as.integer(c(NA, -2)), 2))
+
+y <- validate(as.integer(c(NA, 0, 2)), 2)
+stopifnot(identical(y, as.integer(c(NA, 2))))

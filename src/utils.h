@@ -107,14 +107,16 @@ static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
   int state = 0;
   int count = 0;
   for (int i = 0; i < M; ++ i) {
-    if (idxs_ptr[i] > 0) {
-      if (state < 0) error("only 0's may be mixed with negative subscripts");
-      if (idxs_ptr[i] > N) error("subscript out of bounds");
+    if (idxs_ptr[i] > 0 || idxs_ptr[i] == NA_INTEGER) {
+      if (idxs_ptr[i] != NA_INTEGER) {
+        if (state < 0) error("only 0's may be mixed with negative subscripts");
+        if (idxs_ptr[i] > N) error("subscript out of bounds");
+      }
       state = 1;
       ++ count;
 
     } else if (idxs_ptr[i] < 0) {
-      if (state > 0) error("only 0's may be mixed with positive subscripts");
+      if (state > 0) error("only 0's may be mixed with negative subscripts");
       state = -1;
     }
   }
@@ -127,7 +129,8 @@ static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
     int *ans = (int*) R_alloc(count, sizeof(int));
     int j = 0;
     for (int i = 0; i < M; ++ i) {
-      if (idxs_ptr[i] > 0) ans[j ++] = idxs_ptr[i];
+      // idxs_ptr[i] can be positive or NA_INTEGER
+      if (idxs_ptr[i]) ans[j ++] = idxs_ptr[i];
     }
     return ans;
   }
