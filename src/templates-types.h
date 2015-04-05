@@ -5,6 +5,7 @@
 #define CONCAT(x,y) x ##_## y
 #define CONCAT_MACROS(x,y) CONCAT(x,y)
 
+
 /*
  Data type macros for argument 'x'
  */
@@ -136,4 +137,25 @@
   #else
     #error "INTERNAL ERROR: Failed to set C macro METHOD_NAME: Unknown X_TYPE"
   #endif
+#endif
+
+
+#ifdef HAS_ROWS
+  #define NUM_OF_ROWS nrows
+  #define ROW_INDEX_II (rows[ii]-1)
+  #define METHOD_NAME_ROW CONCAT_MACROS(METHOD_NAME, hasRows)
+#else
+  #define NUM_OF_ROWS nrow
+  #define ROW_INDEX_II ii
+  #define METHOD_NAME_ROW CONCAT_MACROS(METHOD_NAME, noRows)
+#endif
+
+#ifdef HAS_COLS
+  #define NUM_OF_COLS ncols
+  #define COL_INDEX_JJ (cols[jj]-1)
+  #define METHOD_NAME_ROW_COL CONCAT_MACROS(METHOD_NAME_ROW, hasCols)
+#else
+  #define NUM_OF_COLS ncol
+  #define COL_INDEX_JJ jj
+  #define METHOD_NAME_ROW_COL CONCAT_MACROS(METHOD_NAME_ROW, noCols)
 #endif

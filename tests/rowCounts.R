@@ -14,24 +14,36 @@ rowCounts_R <- function(x, value=TRUE, na.rm=FALSE, ...) {
 # Data type: integer and numeric
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 for (mode in c("integer", "double")) {
-  x <- matrix(runif(20*5, min=-3, max=3), nrow=20, ncol=5)
+  nrow <- 20
+  ncol <- 5
+  x <- matrix(runif(20*5, min=-3, max=3), nrow=nrow, ncol=ncol)
   x[sample.int(length(x), size=7)] <- 0
   storage.mode(x) <- mode
+
+  y <- matrix(0, nrow=nrow*2, ncol=ncol*2)
+  rows <- sample.int(dim(y)[1], size=nrow)
+  cols <- sample.int(dim(y)[2], size=ncol)
+  y[rows,cols] <- x
+  storage.mode(y) <- mode
 
   for (na.rm in c(FALSE, TRUE)) {
     # Count zeros
     r0 <- rowCounts_R(x, value=0, na.rm=na.rm)
     r1 <- rowCounts(x, value=0, na.rm=na.rm)
     r2 <- colCounts(t(x), value=0, na.rm=na.rm)
+    r3 <- rowCounts(y, value=0, na.rm=na.rm, rows=rows, cols=cols)
     stopifnot(identical(r1, r0))
     stopifnot(identical(r2, r0))
+    stopifnot(identical(r3, r0))
 
     # Count NAs
     r0 <- rowCounts_R(x, value=NA, na.rm=na.rm)
     r1 <- rowCounts(x, value=NA, na.rm=na.rm)
     r2 <- colCounts(t(x), value=NA, na.rm=na.rm)
+    r3 <- rowCounts(y, value=NA, na.rm=na.rm, rows=rows, cols=cols)
     stopifnot(identical(r1, r0))
     stopifnot(identical(r2, r0))
+    stopifnot(identical(r3, r0))
 
     if (mode == "integer") {
       ux <- unique(as.vector(x))
@@ -40,8 +52,10 @@ for (mode in c("integer", "double")) {
         r0 <- r0 + rowCounts_R(x, value=value, na.rm=na.rm)
         r1 <- r1 + rowCounts(x, value=value, na.rm=na.rm)
         r2 <- r2 + colCounts(t(x), value=value, na.rm=na.rm)
+        r3 <- r3 + rowCounts(y, value=value, na.rm=na.rm, rows=rows, cols=cols)
         stopifnot(identical(r1, r0))
         stopifnot(identical(r2, r0))
+        stopifnot(identical(r3, r0))
       }
       stopifnot(all(r0 == ncol(x)))
     } # if (mode == "integer")

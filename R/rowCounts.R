@@ -53,7 +53,7 @@
 # @keyword iteration
 # @keyword univar
 #*/###########################################################################
-rowCounts <- function(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...) {
+rowCounts <- function(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...) {
   # Argument 'x':
   if (is.matrix(x)) {
   } else if (is.vector(x)) {
@@ -78,7 +78,7 @@ rowCounts <- function(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...) {
   if (is.numeric(x) || is.logical(x)) {
     na.rm <- as.logical(na.rm)
     hasNAs <- TRUE
-    counts <- .Call("rowCounts", x, dim., value, 2L, na.rm, hasNAs, PACKAGE="matrixStats")
+    counts <- .Call("rowCounts", x, dim., value, 2L, na.rm, hasNAs, rows, cols, PACKAGE="matrixStats")
   } else {
     if (is.vector(x)) dim(x) <- dim.
     if (is.na(value)) {
@@ -168,11 +168,11 @@ count <- function(x, value=TRUE, na.rm=FALSE, ...) {
 
 
 
-rowAlls <- function(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...) {
+rowAlls <- function(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...) {
   if (is.numeric(x) || is.logical(x)) {
     na.rm <- as.logical(na.rm)
     hasNAs <- TRUE
-    counts <- .Call("rowCounts", x, dim., value, 0L, na.rm, hasNAs, PACKAGE="matrixStats")
+    counts <- .Call("rowCounts", x, dim., value, 0L, na.rm, hasNAs, rows, cols, PACKAGE="matrixStats")
     as.logical(counts)
   } else {
     rowAlls(x == value, na.rm=na.rm, dim.=dim., ...)
@@ -204,11 +204,11 @@ allValue <- function(x, value=TRUE, na.rm=FALSE, ...) {
 
 
 
-rowAnys <- function(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...) {
+rowAnys <- function(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...) {
   if (is.numeric(x) || is.logical(x)) {
     na.rm <- as.logical(na.rm)
     hasNAs <- TRUE
-    counts <- .Call("rowCounts", x, dim., value, 1L, na.rm, hasNAs, PACKAGE="matrixStats")
+    counts <- .Call("rowCounts", x, dim., value, 1L, na.rm, hasNAs, rows, cols, PACKAGE="matrixStats")
     as.logical(counts)
   } else {
     rowAnys(x == value, na.rm=na.rm, dim.=dim., ...)

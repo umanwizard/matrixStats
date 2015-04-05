@@ -103,10 +103,11 @@ static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
   assertArgVector(idxs, R_TYPE_INT, "idxs");
   R_xlen_t M = xlength(idxs);
   int *idxs_ptr = INTEGER(idxs);
+  R_xlen_t i, j;
 
   int state = 0;
-  int count = 0;
-  for (int i = 0; i < M; ++ i) {
+  R_xlen_t count = 0;
+  for (i = 0; i < M; ++ i) {
     if (idxs_ptr[i] > 0 || idxs_ptr[i] == NA_INTEGER) {
       if (idxs_ptr[i] != NA_INTEGER) {
         if (state < 0) error("only 0's may be mixed with negative subscripts");
@@ -127,8 +128,8 @@ static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
 
   if (state > 0) {
     int *ans = (int*) R_alloc(count, sizeof(int));
-    int j = 0;
-    for (int i = 0; i < M; ++ i) {
+    j = 0;
+    for (i = 0; i < M; ++ i) {
       // idxs_ptr[i] can be positive or NA_INTEGER
       if (idxs_ptr[i]) ans[j ++] = idxs_ptr[i];
     }
@@ -136,11 +137,11 @@ static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
   }
 
   // state < 0
-  unsigned char filter[N];
+  BOOL filter[N];
   count = N;
   memset(filter, 0, sizeof(filter));
-  for (int i = 0; i < M; ++ i) {
-    int idx = -idxs_ptr[i];
+  for (i = 0; i < M; ++ i) {
+    R_xlen_t idx = -idxs_ptr[i];
     if (idx > 0 && idx <= N) {
       if (filter[idx-1] == 0) {
         -- count;
@@ -153,8 +154,8 @@ static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
   if (count == 0) return NULL;
 
   int *ans = (int*) R_alloc(count, sizeof(int));
-  int j = 0;
-  for (int i = 0; i < N; ++ i) {
+  j = 0;
+  for (i = 0; i < N; ++ i) {
     if (!filter[i]) ans[j ++] = i + 1;
   }
 

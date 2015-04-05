@@ -24,38 +24,37 @@
 #include "templates-types.h" 
 
 
-void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int what, int narm, int hasna, int *ans) {
+void METHOD_NAME_ROW_COL(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int what, int narm, int hasna, int *ans, int *rows, R_xlen_t nrows, int *cols, R_xlen_t ncols) {
   R_xlen_t ii, jj, kk;
+  R_xlen_t colBegin;
   int count;
   X_C_TYPE xvalue;
 
   if (what == 0) {  /* all */
-    for (ii=0; ii < nrow; ii++) ans[ii] = 1;
+    for (ii=0; ii < NUM_OF_ROWS; ii++) ans[ii] = 1;
 
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
-        for (ii=0; ii < nrow; ii++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
           /* Skip? */
           if (ans[ii]) {
-            xvalue = x[kk++];
+            xvalue = x[colBegin+ROW_INDEX_II];
             if (!X_ISNAN(xvalue)) {
               ans[ii] = 0;
               /* Found another value! Skip from now on */
             }
-          } else {
-            kk++;
           }
         }
       }
     } else {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
-        for (ii=0; ii < nrow; ii++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
           /* Skip? */
           if (ans[ii]) {
-            xvalue = x[kk++];
+            xvalue = x[colBegin+ROW_INDEX_II];
             if (xvalue == value) {
             } else if (narm && X_ISNAN(xvalue)) {
               /* Skip */
@@ -70,25 +69,21 @@ void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int 
               /* Found another value! Skip from now on */
               ans[ii] = 0;
             }
-          } else {
-            kk++;
           }
         } /* for (ii ...) */
       } /* for (jj ...) */
     }
   } else if (what == 1) {  /* any */
-    for (ii=0; ii < nrow; ii++) ans[ii] = 0;
+    for (ii=0; ii < NUM_OF_ROWS; ii++) ans[ii] = 0;
 
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
-        for (ii=0; ii < nrow; ii++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
           /* Skip? */
-          if (ans[ii]) {
-            kk++;
-          } else {
-            xvalue = x[kk++];
+          if (!ans[ii]) {
+            xvalue = x[colBegin+ROW_INDEX_II];
             if (X_ISNAN(xvalue)) {
               ans[ii] = 1;
               /* Found value! Skip from now on */
@@ -97,14 +92,12 @@ void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int 
         }
       }
     } else {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
-        for (ii=0; ii < nrow; ii++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
           /* Skip? */
-          if (ans[ii]) {
-            kk++;
-	  } else {
-            xvalue = x[kk++];
+          if (!ans[ii]) {
+            xvalue = x[colBegin+ROW_INDEX_II];
             if (xvalue == value) {
               /* Found value! Skip from now on */
               ans[ii] = 1;
@@ -118,31 +111,31 @@ void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int 
                the answer can be either NA or TRUE.*/
               ans[ii] = NA_INTEGER;
             }
-	  }
+          }
         } /* for (ii ...) */
       } /* for (jj ...) */
     }
   } else if (what == 2) {  /* count */
-    for (ii=0; ii < nrow; ii++) ans[ii] = 0;
+    for (ii=0; ii < NUM_OF_ROWS; ii++) ans[ii] = 0;
 
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
-        for (ii=0; ii < nrow; ii++) {
-          xvalue = x[kk++];
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
+          xvalue = x[colBegin+ROW_INDEX_II];
           if (X_ISNAN(xvalue)) ans[ii] = ans[ii] + 1;
         }
       }
     } else {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
-        for (ii=0; ii < nrow; ii++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
           count = ans[ii];
           /* Nothing more to do on this row? */
           if (count == NA_INTEGER) continue;
   
-          xvalue = x[kk++];
+          xvalue = x[colBegin+ROW_INDEX_II];
           if (xvalue == value) {
             ans[ii] = count + 1;
           } else {

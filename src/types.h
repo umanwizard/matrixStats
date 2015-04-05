@@ -8,6 +8,10 @@
 #define R_INT_MAX  INT_MAX
 #endif
 
+#ifndef BOOL
+#define BOOL unsigned char
+#endif
+
 /* As in <R>/src/include/Defn.h */
 #ifdef HAVE_LONG_DOUBLE
 #define LDOUBLE long double

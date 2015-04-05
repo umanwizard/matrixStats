@@ -3,6 +3,15 @@
 
 #undef METHOD_NAME
 
+#undef HAS_ROWS
+#undef NUM_OF_ROWS
+#undef ROW_INDEX_II
+
+#undef HAS_COLS
+#undef NUM_OF_COLS
+#undef COL_INDEX_JJ
+
+
 #undef X_C_TYPE
 #undef X_IN_C
 #undef X_ISNAN
@@ -33,3 +42,5 @@
 #undef MARGIN
 #undef OP
 
+#undef METHOD_NAME_ROW
+#undef METHOD_NAME_ROW_COL
