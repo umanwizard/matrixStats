@@ -1,10 +1,5 @@
 #include <Rinternals.h>
-/*
- * Sets type-specific macros
- */
-#define CONCAT(x,y) x ##_## y
-#define CONCAT_MACROS(x,y) CONCAT(x,y)
-
+#include "macros.h"
 
 /*
  Data type macros for argument 'x'

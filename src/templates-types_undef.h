@@ -1,6 +1,3 @@
-#undef CONCAT
-#undef CONCAT_MACROS
-
 #undef METHOD_NAME
 
 #undef HAS_ROWS
