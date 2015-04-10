@@ -153,7 +153,7 @@ void METHOD_NAME_ROW_COL(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE val
 }
 
 /* Undo template macros */
-#include "templates-types_undef.h" 
+//#include "templates-types_undef.h"
 
 
 /***************************************************************************

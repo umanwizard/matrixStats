@@ -1,6 +1,31 @@
 #include <Rinternals.h>
 #include "macros.h"
 
+
+#undef X_C_TYPE
+#undef X_IN_C
+#undef X_ISNAN
+#undef X_ISNA
+#undef X_ABS
+#undef X_PSORT
+#undef X_QSORT_I
+
+#undef Y_C_TYPE
+#undef Y_IN_C
+#undef Y_ISNAN
+#undef Y_ISNA
+#undef Y_ABS
+#undef Y_PSORT
+#undef Y_QSORT_I
+
+#undef ANS_SXP
+#undef ANS_NA
+#undef ANS_ISNAN
+#undef ANS_ISNA
+#undef ANS_C_TYPE
+#undef ANS_IN_C
+
+
 /*
  Data type macros for argument 'x'
  */
@@ -56,8 +81,8 @@
   #else
     #error "INTERNAL ERROR: Failed to set C macro Y_C_TYPE etc.: Unknown Y_TYPE"
   #endif
-#else
-  #define Y_TYPE '.'
+//#else
+//  #define Y_TYPE '.'
 #endif
 
 
@@ -69,6 +94,7 @@
   /* Default to same as 'x' */
   #define ANS_TYPE X_TYPE
 #endif
+
 
 #if ANS_TYPE == 'i'
   #define ANS_SXP INTSXP
@@ -134,6 +160,14 @@
   #endif
 #endif
 
+
+#undef NUM_OF_ROWS
+#undef ROW_INDEX_II
+#undef METHOD_NAME_ROW
+
+#undef NUM_OF_COLS
+#undef COL_INDEX_JJ
+#undef METHOD_NAME_ROW_COL
 
 #ifdef HAS_ROWS
   #define NUM_OF_ROWS nrows

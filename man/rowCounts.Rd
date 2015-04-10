@@ -26,11 +26,11 @@
 
 \usage{
   count(x, value=TRUE, na.rm=FALSE, ...)
-  rowCounts(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...)
+  rowCounts(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...)
   colCounts(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...)
-  rowAlls(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...)
+  rowAlls(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...)
   colAlls(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...)
-  rowAnys(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...)
+  rowAnys(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...)
   colAnys(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...)
 }
 
