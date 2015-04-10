@@ -24,7 +24,7 @@
 #include "templates-types.h" 
 
 
-void METHOD_NAME_ROW_COL(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int what, int narm, int hasna, int *ans, int *rows, R_xlen_t nrows, int *cols, R_xlen_t ncols) {
+RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
   R_xlen_t ii, jj, kk;
   R_xlen_t colBegin;
   int count;

@@ -10,10 +10,14 @@
 
 
 #define METHOD rowCounts
+#define RETURN_TYPE void
+#define ARGUMENTS_LIST X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int what, int narm, int hasna, int *ans, int *rows, R_xlen_t nrows, int *cols, R_xlen_t ncols
+
 #define X_TYPE_I
 #define X_TYPE_R
 #define X_TYPE_L
 #include "templates-gen.h"
+
 #undef METHOD
 
 
