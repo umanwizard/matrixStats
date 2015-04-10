@@ -188,3 +188,18 @@
   #define COL_INDEX_JJ jj
   #define METHOD_NAME_ROW_COL CONCAT_MACROS(METHOD_NAME_ROW, noCols)
 #endif
+
+#undef METHOD_NAME_noRows
+#undef METHOD_NAME_noRows_noCols
+#undef METHOD_NAME_noRows_hasCols
+#undef METHOD_NAME_hasRows
+#undef METHOD_NAME_hasRows_noCols
+#undef METHOD_NAME_hasRows_hasCols
+
+#define METHOD_NAME_noRows CONCAT_MACROS(METHOD_NAME, noRows)
+#define METHOD_NAME_noRows_noCols CONCAT_MACROS(METHOD_NAME_noRows, noCols)
+#define METHOD_NAME_noRows_hasCols CONCAT_MACROS(METHOD_NAME_noRows, hasCols)
+
+#define METHOD_NAME_hasRows CONCAT_MACROS(METHOD_NAME, hasRows)
+#define METHOD_NAME_hasRows_noCols CONCAT_MACROS(METHOD_NAME_hasRows, noCols)
+#define METHOD_NAME_hasRows_hasCols CONCAT_MACROS(METHOD_NAME_hasRows, hasCols)
