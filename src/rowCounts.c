@@ -42,11 +42,11 @@ SEXP rowCounts(SEXP x, SEXP dim, SEXP value, SEXP what, SEXP naRm, SEXP hasNA, S
   int *crows = NULL, *ccols = NULL;
   BOOL hasRows = 0, hasCols = 0;
 
-  if (!isNull(rows) && xlength(rows)) {
+  if (!isNull(rows)) {
     crows = validateIndices(rows, nrow, &nrows);
     hasRows = 1;
   }
-  if (!isNull(cols) && xlength(cols)) {
+  if (!isNull(cols)) {
     ccols = validateIndices(cols, ncol, &ncols);
     hasCols = 1;
   }

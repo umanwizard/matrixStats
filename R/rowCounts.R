@@ -81,6 +81,11 @@ rowCounts <- function(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=N
     counts <- .Call("rowCounts", x, dim., value, 2L, na.rm, hasNAs, rows, cols, PACKAGE="matrixStats")
   } else {
     if (is.vector(x)) dim(x) <- dim.
+
+    if (!is.null(rows) && !is.null(cols)) x <- x[rows,cols]
+    else if (!is.null(rows)) x <- x[rows,]
+    else if (!is.null(cols)) x <- x[,cols]
+
     if (is.na(value)) {
       counts <- apply(x, MARGIN=1L, FUN=function(x) sum(is.na(x)))
     } else {

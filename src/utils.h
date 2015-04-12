@@ -130,7 +130,7 @@ static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
     int *ans = (int*) R_alloc(count, sizeof(int));
     j = 0;
     for (i = 0; i < M; ++ i) {
-      // idxs_ptr[i] can be positive or NA_INTEGER
+      // idxs_ptr[i] can be positive or 0
       if (idxs_ptr[i]) ans[j ++] = idxs_ptr[i];
     }
     return ans;
