@@ -1,4 +1,8 @@
-// WARNING: This file is just for testing 'validate'. Will be removed in the future.
+/***************************************************************************
+ Public methods:
+ SEXP validate(SEXP idxs, SEXP n)
+
+ **************************************************************************/
 #include <string.h>
 #include "utils.h"
 
