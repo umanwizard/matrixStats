@@ -1,11 +1,11 @@
 /***********************************************************************
  TEMPLATE:
-  void rowCounts_<Integer|Real|Logical>(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int narm, int hasna, int *ans)
+  void rowCounts_<Integer|Real|Logical>(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int narm, int hasna, int *ans, int *rows, int *cols)
 
  GENERATES:
-  void rowCounts_Real(double *x, R_xlen_t nrow, R_xlen_t ncol, double value, int narm, int hasna, int *ans)
-  void rowCounts_Integer(int *x, R_xlen_t nrow, R_xlen_t ncol, int value, int narm, int hasna, int *ans)
-  void rowCounts_Logical(int *x, R_xlen_t nrow, R_xlen_t ncol, int value, int narm, int hasna, int *ans)
+  void rowCounts_Real(double *x, R_xlen_t nrow, R_xlen_t ncol, double value, int narm, int hasna, int *ans, int *rows, int *cols)
+  void rowCounts_Integer(int *x, R_xlen_t nrow, R_xlen_t ncol, int value, int narm, int hasna, int *ans, int *rows, int *cols)
+  void rowCounts_Logical(int *x, R_xlen_t nrow, R_xlen_t ncol, int value, int narm, int hasna, int *ans, int *rows, int *cols)
 
  Arguments:
    The following macros ("arguments") should be defined for the 
@@ -158,6 +158,8 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
 
 /***************************************************************************
  HISTORY:
+ 2015-04-13 [DJ]
+  o Support subsetted computation.
  2014-11-06 [HB]
   o CLEANUP: Moving away from R data types in low-level C functions.
  2014-11-01 [HB]

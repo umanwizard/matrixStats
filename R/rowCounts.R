@@ -31,6 +31,8 @@
 #  \item{na.rm}{If @TRUE, @NAs are excluded first, otherwise not.}
 #  \item{dim.}{An @integer @vector of length two specifying the
 #              dimension of \code{x}, also when not a @matrix.}
+#  \item{rows}{A @vector indicating sub-@matrix's rows.}
+#  \item{cols}{A @vector indicating sub-@matrix's cols.}
 #  \item{...}{Not used.}
 # }
 #

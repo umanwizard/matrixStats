@@ -1,6 +1,6 @@
 /***************************************************************************
  Public methods:
- SEXP rowCounts(SEXP x, SEXP value, SEXP naRm, SEXP hasNA)
+ SEXP rowCounts(SEXP x, SEXP value, SEXP naRm, SEXP hasNA, SEXP rows, SEXP cols)
 
  Copyright Henrik Bengtsson, 2014
  **************************************************************************/
@@ -80,6 +80,8 @@ SEXP rowCounts(SEXP x, SEXP dim, SEXP value, SEXP what, SEXP naRm, SEXP hasNA, S
 
 /***************************************************************************
  HISTORY:
+ 2015-04-13 [DJ]
+  o Support subsetted computation.
  2014-06-02 [HB]
   o Created.
  **************************************************************************/
