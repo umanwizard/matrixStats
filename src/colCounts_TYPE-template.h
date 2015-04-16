@@ -24,33 +24,33 @@
 #include "templates-types.h"
 
 
-void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int what, int narm, int hasna, int *ans) {
-  R_xlen_t ii, jj, kk;
+RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
+  R_xlen_t ii, jj;
+  R_xlen_t colBegin;
   int count;
   X_C_TYPE xvalue;
 
   if (what == 0L) {  /* all */
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
         count = 1;
-        for (ii=0; ii < nrow; ii++) {
-          if (!X_ISNAN(x[kk++])) {
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
+          if (!X_ISNAN(x[colBegin+ROW_INDEX_II])) {
             count = 0;
             /* Found another value! Early stopping */
-            kk += nrow - ii - 1;
             break;
           }
         }
         ans[jj] = count;
       }
     } else {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
         count = 1;
-        for (ii=0; ii < nrow; ii++) {
-          xvalue = x[kk++];
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
+          xvalue = x[colBegin+ROW_INDEX_II];
           if (xvalue == value) {
           } else if (narm && X_ISNAN(xvalue)) {
             /* Skip */
@@ -64,7 +64,6 @@ void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int 
             } else {
             count = 0;
             /* Found another value! Early stopping */
-            kk += nrow - ii - 1;
             break;
           }
         } /* for (ii ...) */
@@ -74,29 +73,27 @@ void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int 
   } else if (what == 1L) {  /* any */
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
         count = 0;
-        for (ii=0; ii < nrow; ii++) {
-          if (X_ISNAN(x[kk++])) {
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
+          if (X_ISNAN(x[colBegin+ROW_INDEX_II])) {
             count = 1;
             /* Found value! Early stopping */
-            kk += nrow - ii - 1;
             break;
           }
         }
         ans[jj] = count;
       }
     } else {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
         count = 0;
-        for (ii=0; ii < nrow; ii++) {
-          xvalue = x[kk++];
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
+          xvalue = x[colBegin+ROW_INDEX_II];
           if (xvalue == value) {
             count = 1;
             /* Found value! Early stopping */
-            kk += nrow - ii - 1;
             break;
           } else if (narm && X_ISNAN(xvalue)) {
             /* Skipping */
@@ -115,28 +112,27 @@ void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int 
   } else if (what == 2L) {  /* count */
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
         count = 0;
-        for (ii=0; ii < nrow; ii++) {
-          if (X_ISNAN(x[kk++])) {
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
+          if (X_ISNAN(x[colBegin+ROW_INDEX_II])) {
             ++count;
           }
         }
         ans[jj] = count;
       }
     } else {
-      kk = 0;
-      for (jj=0; jj < ncol; jj++) {
+      for (jj=0; jj < NUM_OF_COLS; jj++) {
+        colBegin = COL_INDEX_JJ * nrow;
         count = 0;
-        for (ii=0; ii < nrow; ii++) {
-          xvalue = x[kk++];
+        for (ii=0; ii < NUM_OF_ROWS; ii++) {
+          xvalue = x[colBegin+ROW_INDEX_II];
           if (xvalue == value) {
             ++count;
           } else if (!narm && X_ISNAN(xvalue)) {
             count = NA_INTEGER;
             /* Early stopping */
-            kk += nrow - ii - 1;
             break;
           }
         } /* for (ii ...) */
@@ -149,7 +145,7 @@ void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int 
 }
 
 /* Undo template macros */
-#include "templates-types_undef.h"
+//#include "templates-types_undef.h"
 
 
 /***************************************************************************
