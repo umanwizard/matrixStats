@@ -262,7 +262,7 @@ anyValue <- function(x, value=TRUE, na.rm=FALSE, idxs=NULL, ...) {
   if (is.numeric(x) || is.logical(x)) {
     na.rm <- as.logical(na.rm)
     hasNAs <- TRUE
-    counts <- .Call("count", x, value, 1L, na.rm, hasNAs, PACKAGE="matrixStats")
+    counts <- .Call("count", x, value, 1L, na.rm, hasNAs, idxs, PACKAGE="matrixStats")
     as.logical(counts)
   } else {
     if (!is.null(idxs)) x <- x[idxs]
