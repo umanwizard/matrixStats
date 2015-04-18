@@ -81,7 +81,7 @@ SEXP rowCounts(SEXP x, SEXP dim, SEXP value, SEXP what, SEXP naRm, SEXP hasNA, S
 /***************************************************************************
  HISTORY:
  2015-04-13 [DJ]
-  o Support subsetted computation.
+  o Supported subsetted computation.
  2014-06-02 [HB]
   o Created.
  **************************************************************************/
