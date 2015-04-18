@@ -1,11 +1,11 @@
 /***********************************************************************
  TEMPLATE:
-  void colCounts_<Integer|Real|Logical>(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int narm, int hasna, int *ans)
+  void colCounts_<Integer|Real|Logical>[HAS_ROWS][HAS_COLS](X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, X_C_TYPE value, int narm, int hasna, int *ans, int *row, R_xlen_t nrows, int *col, R_xlen_t ncol)
 
  GENERATES:
-  void colCounts_Real(double *x, R_xlen_t nrow, R_xlen_t ncol, double value, int narm, int hasna, int *ans)
-  void colCounts_Integer(int *x, R_xlen_t nrow, R_xlen_t ncol, int value, int narm, int hasna, int *ans)
-  void colCounts_Logical(int *x, R_xlen_t nrow, R_xlen_t ncol, int value, int narm, int hasna, int *ans)
+  void colCounts_Real[HAS_ROWS][HAS_COLS](double *x, R_xlen_t nrow, R_xlen_t ncol, double value, int narm, int hasna, int *ans, int *rows, R_xlen_t nrows, int *cols, R_xlen_t ncols)
+  void colCounts_Integer[HAS_ROWS][HAS_COLS](int *x, R_xlen_t nrow, R_xlen_t ncol, int value, int narm, int hasna, int *ans, int *rows, R_xlen_t nrows, int *cols, R_xlen_t ncols)
+  void colCounts_Logical[HAS_ROWS][HAS_COLS](int *x, R_xlen_t nrow, R_xlen_t ncol, int value, int narm, int hasna, int *ans, int *rows, R_xlen_t nrows, int *cols, R_xlen_t ncols)
 
  Arguments:
    The following macros ("arguments") should be defined for the
@@ -150,6 +150,8 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
 
 /***************************************************************************
  HISTORY:
+ 2015-04-18 [DJ]
+  o Supported subsetted computation.
  2014-11-14 [HB]
   o Created colCounts() templates from rowCounts() templates.
  **************************************************************************/

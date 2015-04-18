@@ -33,6 +33,7 @@
 #              dimension of \code{x}, also when not a @matrix.}
 #  \item{rows}{A @vector indicating sub-@matrix's rows.}
 #  \item{cols}{A @vector indicating sub-@matrix's cols.}
+#  \item{idxs}{A @vector indicating sub-@vector's indices.}
 #  \item{...}{Not used.}
 # }
 #

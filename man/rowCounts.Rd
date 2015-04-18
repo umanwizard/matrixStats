@@ -25,13 +25,13 @@
 }
 
 \usage{
-  count(x, value=TRUE, na.rm=FALSE, ...)
+  count(x, value=TRUE, na.rm=FALSE, idxs=NULL, ...)
   rowCounts(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...)
-  colCounts(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...)
+  colCounts(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...)
   rowAlls(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...)
-  colAlls(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...)
+  colAlls(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...)
   rowAnys(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...)
-  colAnys(x, value=TRUE, na.rm=FALSE, dim.=dim(x), ...)
+  colAnys(x, value=TRUE, na.rm=FALSE, dim.=dim(x), rows=NULL, cols=NULL, ...)
 }
 
 \arguments{
@@ -42,6 +42,7 @@
              dimension of \code{x}, also when not a \code{\link[base]{matrix}}.}
  \item{rows}{A \code{\link[base]{vector}} indicating sub-\code{\link[base]{matrix}}'s rows.}
  \item{cols}{A \code{\link[base]{vector}} indicating sub-\code{\link[base]{matrix}}'s cols.}
+ \item{idxs}{A \code{\link[base]{vector}} indicating sub-\code{\link[base]{vector}}'s indices.}
  \item{...}{Not used.}
 }
 
