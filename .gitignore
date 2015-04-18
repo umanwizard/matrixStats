@@ -9,3 +9,5 @@
 ..Rcheck
 .RData
 *.swp
+reports
+*.backup
