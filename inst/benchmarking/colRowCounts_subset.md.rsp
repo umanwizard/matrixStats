@@ -49,8 +49,8 @@ value <- 42
 ```r
 <%=withCapture({
 colStats <- microbenchmark(
- "colCounts-X-subsetted"   = colCounts(X, value=value, na.rm=FALSE, rows=rows, cols=cols),
- "colCounts(X_S)"          = colCounts(X_S, value=value, na.rm=FALSE),
+ "colCounts_X_S"           = colCounts(X_S, value=value, na.rm=FALSE),
+ "colCounts(X,rows,cols)"  = colCounts(X, value=value, na.rm=FALSE, rows=rows, cols=cols),
  "colCounts(X[rows,cols])" = colCounts(X[rows,cols], value=value, na.rm=FALSE),
  unit = "ms"
 )
@@ -69,8 +69,8 @@ X_S <- t(X_S)
 ```r
 <%=withCapture({
 rowStats <- microbenchmark(
- "rowCounts-X-subsetted"   = rowCounts(X, value=value, na.rm=FALSE, rows=cols, cols=rows),
- "rowCounts(X_S)"          = rowCounts(X_S, value=value, na.rm=FALSE),
+ "rowCounts_X_S"           = rowCounts(X_S, value=value, na.rm=FALSE),
+ "rowCounts(X,cols,rows)"  = rowCounts(X, value=value, na.rm=FALSE, rows=cols, cols=rows),
  "rowCounts(X[cols,rows])" = rowCounts(X[cols,rows], value=value, na.rm=FALSE),
  unit = "ms"
 )
