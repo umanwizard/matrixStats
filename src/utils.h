@@ -98,51 +98,51 @@ static R_INLINE int asLogicalNoNA(SEXP x, char *xlabel) {
 } /* asLogicalNoNA() */
 
 
-/** xlength(idxs) must not be 0, which should be checked before calling this function. **/
-static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
+/** idxs must not be NULL, which should be checked before calling this function. **/
+static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t maxIdx, R_xlen_t *ansNidxs) {
   assertArgVector(idxs, R_TYPE_INT, "idxs");
-  R_xlen_t M = xlength(idxs);
-  int *idxs_ptr = INTEGER(idxs);
-  R_xlen_t i, j;
+  R_xlen_t nidxs = xlength(idxs);
+  int *cidxs = INTEGER(idxs);
+  R_xlen_t ii, jj;
 
   int state = 0;
   R_xlen_t count = 0;
-  for (i = 0; i < M; ++ i) {
-    if (idxs_ptr[i] > 0 || idxs_ptr[i] == NA_INTEGER) {
-      if (idxs_ptr[i] != NA_INTEGER) {
+  for (ii = 0; ii < nidxs; ++ ii) {
+    if (cidxs[ii] > 0 || cidxs[ii] == NA_INTEGER) {
+      if (cidxs[ii] != NA_INTEGER) {
         if (state < 0) error("only 0's may be mixed with negative subscripts");
-        if (idxs_ptr[i] > N) error("subscript out of bounds");
+        if (cidxs[ii] > maxIdx) error("subscript out of bounds");
       }
       state = 1;
       ++ count;
 
-    } else if (idxs_ptr[i] < 0) {
+    } else if (cidxs[ii] < 0) {
       if (state > 0) error("only 0's may be mixed with negative subscripts");
       state = -1;
     }
   }
 
-  if (state >= 0) *IDXS = count;
-  if (count == M) return idxs_ptr; // must have: state >= 0
+  if (state >= 0) *ansNidxs = count;
+  if (count == nidxs) return cidxs; // must have: state >= 0
   if (state == 0) return NULL;
 
   if (state > 0) {
     int *ans = (int*) R_alloc(count, sizeof(int));
-    j = 0;
-    for (i = 0; i < M; ++ i) {
-      // idxs_ptr[i] can be positive or 0
-      if (idxs_ptr[i]) ans[j ++] = idxs_ptr[i];
+    jj = 0;
+    for (ii = 0; ii < nidxs; ++ ii) {
+      // cidxs[i] can be positive or 0
+      if (cidxs[ii]) ans[jj ++] = cidxs[ii];
     }
     return ans;
   }
 
   // state < 0
-  BOOL filter[N];
-  count = N;
+  BOOL filter[maxIdx];
+  count = maxIdx;
   memset(filter, 0, sizeof(filter));
-  for (i = 0; i < M; ++ i) {
-    R_xlen_t idx = -idxs_ptr[i];
-    if (idx > 0 && idx <= N) {
+  for (ii = 0; ii < nidxs; ++ ii) {
+    R_xlen_t idx = -cidxs[ii];
+    if (idx > 0 && idx <= maxIdx) {
       if (filter[idx-1] == 0) {
         -- count;
         filter[idx-1] = 1;
@@ -150,13 +150,13 @@ static R_INLINE int* validateIndices(SEXP idxs, R_xlen_t N, R_xlen_t *IDXS) {
     }
   }
 
-  *IDXS = count;
+  *ansNidxs = count;
   if (count == 0) return NULL;
 
   int *ans = (int*) R_alloc(count, sizeof(int));
-  j = 0;
-  for (i = 0; i < N; ++ i) {
-    if (!filter[i]) ans[j ++] = i + 1;
+  jj = 0;
+  for (ii = 0; ii < maxIdx; ++ ii) {
+    if (!filter[ii]) ans[jj ++] = ii + 1;
   }
 
   return ans;

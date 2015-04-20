@@ -17,8 +17,8 @@
 }
 
 \arguments{
-  \item{idxs}{A \code{\link[base]{integer}} \code{\link[base]{vector}}.}
-  \item{N}{The domain of indices.}
+  \item{idxs}{A \code{\link[base]{integer}} \code{\link[base]{vector}}. If \code{\link[base]{NULL}}, all indices are considered.}
+  \item{maxIdx}{The possible max index.}
 }
 
 \value{

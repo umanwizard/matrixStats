@@ -1,27 +1,29 @@
 /***************************************************************************
  Public methods:
- SEXP validate(SEXP idxs, SEXP n)
+ SEXP validate(SEXP idxs, SEXP maxIdx)
 
  **************************************************************************/
 #include <string.h>
 #include "utils.h"
 
-SEXP validate(SEXP idxs, SEXP N) {
-  R_xlen_t IDXS;
-  int *idxs_ptr;
-  int n = asInteger(N);
+SEXP validate(SEXP idxs, SEXP maxIdx) {
+  SEXP ans;
+  int *cidxs;
+  int cmaxIdx = asInteger(maxIdx);
 
-  if (isNull(idxs) || xlength(idxs) == 0) {
-    IDXS = n;
-    idxs_ptr = (int*) R_alloc(n, sizeof(int));
-    for (int i = 0; i < n; ++ i) idxs_ptr[i] = i + 1;
+  if (isNull(idxs)) {
+    // idxs should not be NULL when used for validating idxs
+    ans = PROTECT(allocVector(INTSXP, cmaxIdx));
+    cidxs = INTEGER(ans);
+    for (int i = 0; i < cmaxIdx; ++ i) cidxs[i] = i + 1;
 
   } else {
-    idxs_ptr = validateIndices(idxs, n, &IDXS);
+    R_xlen_t ansNidxs;
+    cidxs = validateIndices(idxs, cmaxIdx, &ansNidxs);
+    ans = PROTECT(allocVector(INTSXP, ansNidxs));
+    memcpy(INTEGER(ans), cidxs, ansNidxs*sizeof(int));
   }
 
-  SEXP ans = PROTECT(allocVector(INTSXP, IDXS));
-  memcpy(INTEGER(ans), idxs_ptr, IDXS*sizeof(int));
   UNPROTECT(1);
   return ans;
 }

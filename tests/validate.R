@@ -48,8 +48,10 @@ stopifnot(identical(y, integer(0)))
 
 # idxs is empty
 y <- validate(integer(0), 5)
-stopifnot(identical(y, 1:5))
+stopifnot(identical(y, integer(0)))
 
+
+# idxs is NULL
 y <- validate(NULL, 5)
 stopifnot(identical(y, 1:5))
 

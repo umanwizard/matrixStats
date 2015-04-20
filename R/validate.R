@@ -8,8 +8,8 @@
 # }
 #
 # \arguments{
-#   \item{idxs}{A @integer @vector.}
-#   \item{N}{The domain of indices.}
+#   \item{idxs}{A @integer @vector. If @NULL, all indices are considered.}
+#   \item{maxIdx}{The possible max index.}
 # }
 #
 # \value{
@@ -18,6 +18,6 @@
 #
 # @examples "../incl/validate.Rex"
 #*/############################################################################
-validate <- function(idxs=NULL, N) {
-  .Call('validate', idxs, N, PACKAGE='matrixStats')
+validate <- function(idxs=NULL, maxIdx) {
+  .Call('validate', idxs, maxIdx, PACKAGE='matrixStats')
 }
