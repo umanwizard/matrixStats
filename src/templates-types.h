@@ -162,30 +162,30 @@
 
 
 #undef NUM_OF_ROWS
-#undef ROW_INDEX_II
+#undef ROW_INDEX
 #undef METHOD_NAME_ROW
 
 #undef NUM_OF_COLS
-#undef COL_INDEX_JJ
+#undef COL_INDEX
 #undef METHOD_NAME_ROW_COL
 
 #ifdef HAS_ROWS
   #define NUM_OF_ROWS nrows
-  #define ROW_INDEX_II (rows[ii]-1)
+  #define ROW_INDEX(ii) (rows[ii]-1)
   #define METHOD_NAME_ROW CONCAT_MACROS(METHOD_NAME, hasRows)
 #else
   #define NUM_OF_ROWS nrow
-  #define ROW_INDEX_II ii
+  #define ROW_INDEX(ii) ii
   #define METHOD_NAME_ROW CONCAT_MACROS(METHOD_NAME, noRows)
 #endif
 
 #ifdef HAS_COLS
   #define NUM_OF_COLS ncols
-  #define COL_INDEX_JJ (cols[jj]-1)
+  #define COL_INDEX(jj) (cols[jj]-1)
   #define METHOD_NAME_ROW_COL CONCAT_MACROS(METHOD_NAME_ROW, hasCols)
 #else
   #define NUM_OF_COLS ncol
-  #define COL_INDEX_JJ jj
+  #define COL_INDEX(jj) jj
   #define METHOD_NAME_ROW_COL CONCAT_MACROS(METHOD_NAME_ROW, noCols)
 #endif
 

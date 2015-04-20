@@ -34,10 +34,10 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         count = 1;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
-          if (!X_ISNAN(x[colBegin+ROW_INDEX_II])) {
+          if (!X_ISNAN(x[colBegin+ROW_INDEX(ii)])) {
             count = 0;
             /* Found another value! Early stopping */
             break;
@@ -47,10 +47,10 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
       }
     } else {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         count = 1;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
-          xvalue = x[colBegin+ROW_INDEX_II];
+          xvalue = x[colBegin+ROW_INDEX(ii)];
           if (xvalue == value) {
           } else if (narm && X_ISNAN(xvalue)) {
             /* Skip */
@@ -74,10 +74,10 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         count = 0;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
-          if (X_ISNAN(x[colBegin+ROW_INDEX_II])) {
+          if (X_ISNAN(x[colBegin+ROW_INDEX(ii)])) {
             count = 1;
             /* Found value! Early stopping */
             break;
@@ -87,10 +87,10 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
       }
     } else {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         count = 0;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
-          xvalue = x[colBegin+ROW_INDEX_II];
+          xvalue = x[colBegin+ROW_INDEX(ii)];
           if (xvalue == value) {
             count = 1;
             /* Found value! Early stopping */
@@ -113,10 +113,10 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         count = 0;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
-          if (X_ISNAN(x[colBegin+ROW_INDEX_II])) {
+          if (X_ISNAN(x[colBegin+ROW_INDEX(ii)])) {
             ++count;
           }
         }
@@ -124,10 +124,10 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
       }
     } else {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         count = 0;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
-          xvalue = x[colBegin+ROW_INDEX_II];
+          xvalue = x[colBegin+ROW_INDEX(ii)];
           if (xvalue == value) {
             ++count;
           } else if (!narm && X_ISNAN(xvalue)) {

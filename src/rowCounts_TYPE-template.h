@@ -36,11 +36,11 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
           /* Skip? */
           if (ans[ii]) {
-            xvalue = x[colBegin+ROW_INDEX_II];
+            xvalue = x[colBegin+ROW_INDEX(ii)];
             if (!X_ISNAN(xvalue)) {
               ans[ii] = 0;
               /* Found another value! Skip from now on */
@@ -50,11 +50,11 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
       }
     } else {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
           /* Skip? */
           if (ans[ii]) {
-            xvalue = x[colBegin+ROW_INDEX_II];
+            xvalue = x[colBegin+ROW_INDEX(ii)];
             if (xvalue == value) {
             } else if (narm && X_ISNAN(xvalue)) {
               /* Skip */
@@ -79,11 +79,11 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
           /* Skip? */
           if (!ans[ii]) {
-            xvalue = x[colBegin+ROW_INDEX_II];
+            xvalue = x[colBegin+ROW_INDEX(ii)];
             if (X_ISNAN(xvalue)) {
               ans[ii] = 1;
               /* Found value! Skip from now on */
@@ -93,11 +93,11 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
       }
     } else {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
           /* Skip? */
           if (!ans[ii]) {
-            xvalue = x[colBegin+ROW_INDEX_II];
+            xvalue = x[colBegin+ROW_INDEX(ii)];
             if (xvalue == value) {
               /* Found value! Skip from now on */
               ans[ii] = 1;
@@ -121,21 +121,21 @@ RETURN_TYPE METHOD_NAME_ROW_COL(ARGUMENTS_LIST) {
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
-          xvalue = x[colBegin+ROW_INDEX_II];
+          xvalue = x[colBegin+ROW_INDEX(ii)];
           if (X_ISNAN(xvalue)) ans[ii] = ans[ii] + 1;
         }
       }
     } else {
       for (jj=0; jj < NUM_OF_COLS; jj++) {
-        colBegin = COL_INDEX_JJ * nrow;
+        colBegin = COL_INDEX(jj) * nrow;
         for (ii=0; ii < NUM_OF_ROWS; ii++) {
           count = ans[ii];
           /* Nothing more to do on this row? */
           if (count == NA_INTEGER) continue;
   
-          xvalue = x[colBegin+ROW_INDEX_II];
+          xvalue = x[colBegin+ROW_INDEX(ii)];
           if (xvalue == value) {
             ans[ii] = count + 1;
           } else {
