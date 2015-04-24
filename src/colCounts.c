@@ -1,6 +1,6 @@
 /***************************************************************************
  Public methods:
- SEXP colCounts(SEXP x, SEXP value, SEXP naRm, SEXP hasNA)
+ SEXP colCounts(SEXP x, SEXP value, SEXP naRm, SEXP hasNA, SEXP rows, SEXP cols)
 
  Copyright Henrik Bengtsson, 2014
  **************************************************************************/
