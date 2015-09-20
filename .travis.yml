@@ -51,8 +51,8 @@ before_install:
 #  - sudo apt-get install gcc-4.9
 #  - echo CLANG=`gcc-4.9 --version`
   - sudo apt-get update -y
-  - sudo apt-get install -y clang-3.6
-  - echo CLANG=`clang-3.6 --version`
+  - sudo apt-get install -y clang
+  - echo CLANG=`clang --version`
 
 install:
   - $RENV install_r R.rsp
