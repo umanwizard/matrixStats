@@ -48,8 +48,10 @@ before_install:
     fi
   - echo GCC=`gcc --version`
   - echo CLANG=`clang --version`
-  - sudo apt-get install clang-3.6
-  - echo CLANG=`clang --version`
+#  - sudo apt-get install gcc-4.9
+#  - echo CLANG=`gcc-4.9 --version`
+  - sudo apt-get update -y
+  - sudo apt-get install -y clang-3.6
   - echo CLANG=`clang-3.6 --version`
 
 install:
